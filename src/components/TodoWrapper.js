@@ -16,13 +16,22 @@ const TodoWrapper = () => {
     }, [todos]);
 
     const addTodo = (todo) => {
-        setTodos([...todos, {
-            id: crypto.randomUUID() ,
-            task: todo ,
-            completed: false ,
-            isEditing: false
-        }])
-        toast.success("The Todo Has Been Added")
+
+        let val = todos.some((value)=>value.task===todo)
+        if(val){
+            toast.error("The Todo Already exists")
+        }else{
+            setTodos([...todos, {
+                id: crypto.randomUUID() ,
+                task: todo ,
+                completed: false ,
+                isEditing: false
+            }])
+            toast.success("The Todo Has Been Added")
+        }
+        console.log(val);
+
+
     }
     const toggleComplete = (id)=>{
         setTodos(todos.map((todo=> todo.id === id ? {...todo,completed: !todo.completed} : todo )))
